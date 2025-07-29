@@ -43,8 +43,6 @@ INSTALLED_APPS = [
 
     # Thirth apps
     'rest_framework',
-
-
 ]
 
 MIDDLEWARE = [
@@ -107,13 +105,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',  # Siempre necesario
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Opcional (para UI web)
+    ],
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
