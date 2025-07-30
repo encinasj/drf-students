@@ -9,7 +9,8 @@ from rest_framework.decorators import api_view ##renderer_classes
 #from rest_framework.renderers import JSONRenderer
 
 
-@api_view(['GET','POST'])
+#get list of registers and post or create a new register
+@api_view(['GET','POST']) #When we use this decorator in our functions the function can use only the specific methods
 #@renderer_classes([JSONRenderer])  # <-- Decorador clave
 def studentsView(request):
     if request.method == 'GET':
@@ -25,7 +26,8 @@ def studentsView(request):
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@api_view(['GET', 'PUT'])
+#Get details and Update an spesific register
+@api_view(['GET', 'PUT','DELETE']) #When we use this decorator in our functions the function can use only the specific methods
 def studenDetaillView(request, pk):
     try:
         student = Students.objects.get(pk=pk)
@@ -41,3 +43,6 @@ def studenDetaillView(request, pk):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
