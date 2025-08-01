@@ -1,10 +1,11 @@
 #from django.shortcuts import render
 #from django.http import JsonResponse
 from students.models import Students
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer, EmployeeSerializer
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.views import APIView
+from employees.models import Employee
 from rest_framework.decorators import api_view ##renderer_classes
 #from rest_framework.renderers import JSONRenderer
 
@@ -46,3 +47,11 @@ def studenDetaillView(request, pk):
     elif request.method == 'DELETE':
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+#class
+
+class Employees(APIView):
+    def get (self,request):
+        employees = Employee.objects.all()
+        serializer =  EmployeeSerializer(employees, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

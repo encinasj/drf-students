@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Own apps
     'students',
     'api',
+    'employees',
 
     # Thirth apps
     'rest_framework',
