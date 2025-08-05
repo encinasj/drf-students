@@ -10,6 +10,8 @@ from employees.models import Employee
 from rest_framework.decorators import api_view ##renderer_classes
 #from rest_framework.renderers import JSONRenderer
 
+from rest_framework import mixins, generics
+
 
 #get list of registers and post or create a new register
 @api_view(['GET','POST']) #When we use this decorator in our functions the function can use only the specific methods
@@ -50,7 +52,7 @@ def studenDetaillView(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 #class
-
+"""
 class Employees(APIView):
     def get (self,request):
         employees = Employee.objects.all()
@@ -87,3 +89,41 @@ class EmployeeDetail(APIView):
         employee = self.get_object(pk)
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+    
+#class and implementing mixins
+"""
+class Employees(mixins.ListModelMixin,mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+    
+class EmployeeDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request,pk)
+    
+    def put(self, request, pk):
+        return self.update(request,pk)
+    
+    def delete(self,request, pk):
+        return self.destroy(request,pk)
+"""
+
+#Generic
+
+class Employees(generics.ListAPIView, generics.CreateAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+class EmployeeDetail(generics.RetrieveAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+    lookup_field = 'pk'
