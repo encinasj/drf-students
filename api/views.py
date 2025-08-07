@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from employees.models import Employee
 from rest_framework.decorators import api_view ##renderer_classes
 #from rest_framework.renderers import JSONRenderer
+from blogs.models import Blog,Comment
+from blogs.serializers import BlogSerializer,CommentSerializer
 
 from rest_framework import mixins, generics, viewsets
 
@@ -162,3 +164,23 @@ class EmployeeViewset(viewsets.ViewSet):
 class EmployeeViewset(viewsets.ModelViewSet):
     queryset =  Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+class BlogsView(generics.ListCreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+class CommentsView(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+class BlogsDetailView(generics.RetrieveAPIView,):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    lookup_field = 'pk'
+   
+
+"""
+class CommentDetailView():
+    pass
+
+"""
