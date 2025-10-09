@@ -14,6 +14,7 @@ from blogs.serializers import BlogSerializer,CommentSerializer
 
 from rest_framework import mixins, generics, viewsets
 from .paginations import CustomPagination
+from employees.filters import EmployeeFilter
 
 #get list of registers and post or create a new register
 @api_view(['GET','POST']) #When we use this decorator in our functions the function can use only the specific methods
@@ -165,6 +166,8 @@ class EmployeeViewset(viewsets.ModelViewSet):
     queryset =  Employee.objects.all()
     serializer_class = EmployeeSerializer
     pagination_class = CustomPagination
+    #nombre del campo por el que queremos filtrar.. cuando se escribe el nombre se tiene que escribir talcual y esta en el registro.
+    filterset_class = EmployeeFilter 
 
 class BlogsView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
