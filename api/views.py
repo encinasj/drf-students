@@ -13,7 +13,7 @@ from blogs.models import Blog,Comment
 from blogs.serializers import BlogSerializer,CommentSerializer
 
 from rest_framework import mixins, generics, viewsets
-
+from .paginations import CustomPagination
 
 #get list of registers and post or create a new register
 @api_view(['GET','POST']) #When we use this decorator in our functions the function can use only the specific methods
@@ -164,10 +164,12 @@ class EmployeeViewset(viewsets.ViewSet):
 class EmployeeViewset(viewsets.ModelViewSet):
     queryset =  Employee.objects.all()
     serializer_class = EmployeeSerializer
+    pagination_class = CustomPagination
 
 class BlogsView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    pagination_class = CustomPagination
 
 class CommentsView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
@@ -178,9 +180,7 @@ class BlogsDetailView(generics.RetrieveAPIView,):
     serializer_class = BlogSerializer
     lookup_field = 'pk'
    
-
-"""
-class CommentDetailView():
-    pass
-
-"""
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    lookup_field = 'pk'

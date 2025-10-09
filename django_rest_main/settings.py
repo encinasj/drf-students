@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -107,11 +106,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'api.paginations.CustomPagination', #se configura desde la app,archivo y clase o funcion
+    'PAGE_SIZE': 2,
+
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',  # Siempre necesario
         'rest_framework.renderers.BrowsableAPIRenderer',  # Opcional (para UI web)
-    ],
+    ]
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
