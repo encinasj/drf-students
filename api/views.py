@@ -163,7 +163,7 @@ class EmployeeViewset(viewsets.ViewSet):
 
 #ModelViewSet
 class EmployeeViewset(viewsets.ModelViewSet):
-    queryset =  Employee.objects.all()
+    queryset =  Employee.objects.all().order_by('id')
     serializer_class = EmployeeSerializer
     pagination_class = CustomPagination
     #nombre del campo por el que queremos filtrar.. cuando se escribe el nombre se tiene que escribir talcual y esta en el registro.
