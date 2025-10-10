@@ -110,6 +110,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'api.paginations.CustomPagination', #se configura desde la app,archivo y clase o funcion
     'PAGE_SIZE': 4,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'SEARCH_PARAM': 'q',
+    'ORDERING_PARAM': 'order-by',
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',  # Siempre necesario
         'rest_framework.renderers.BrowsableAPIRenderer',  # Opcional (para UI web)
