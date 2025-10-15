@@ -1,6 +1,4 @@
 
-
-
 const LearnEvent = () => {
 
     const handleClick= ()=>{
@@ -9,6 +7,8 @@ const LearnEvent = () => {
   return (
     <>
         <button onClick={handleClick} >Click here</button>
+        <br />
+        <h2>dsdfsdfsdf</h2>
     </>
   )
 }
