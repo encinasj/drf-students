@@ -18,7 +18,7 @@ const LearnUseState = () => {
     
   return (
     <>
-      <p>Count: {count||0}</p>
+      <p>Count: <h1>{count||0}</h1></p>
       <button onClick={incrementCount}>Increment</button>
       <br />
       <button onClick={RestartCount}>Restart</button>
