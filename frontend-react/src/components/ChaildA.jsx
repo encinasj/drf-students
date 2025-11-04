@@ -5,7 +5,7 @@ function ChaildA() {
   return (
     <>
         <div>ChaildA </div>
-        < ChaildB />
+        <ChaildB />
     </>
   )
 }
