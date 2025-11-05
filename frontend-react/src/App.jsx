@@ -8,6 +8,7 @@ import LearnUseEffect from "./components/LearnUseEffect"
 import LearnUseMemo from "./components/LearnUseMemo"
 import ChaildA from "./components/ChaildA"
 import { createContext ,useState } from "react"
+import LearnUseRef from "./components/LearnUseRef"
 
 //Context API
 //Create, provider and consumer 
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <>
-      <h1>Learn Events</h1>
+      <h1>Learn Components</h1>
       {/*
         <h1>Learn ReactJS</h1>
         <HelloWorld/>
@@ -37,13 +38,13 @@ function App() {
         <LearnUseState/>
         <LearnUseEffect/>
         <LearnUseMemo/>
+        <StockContext.Provider value={{ stock, price }}>
+          <UserContext.Provider value={{ user, setUser }}>
+            <ChaildA />
+          </UserContext.Provider>
+        </StockContext.Provider>
       */}
-
-      <StockContext.Provider value={{ stock, price }}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <ChaildA />
-        </UserContext.Provider>
-      </StockContext.Provider>
+      <LearnUseRef/>
     </>
   )
 }
