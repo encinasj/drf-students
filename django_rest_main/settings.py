@@ -9,23 +9,18 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 from pathlib import Path
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import os
+from urllib.parse import urlparse
+
+# Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# === SEGURIDAD ===
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-insecure-key-for-dev')
+DEBUG = os.getenv('DEBUG', '1') == '1'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-iwgi))cm=mr(l9%5=up9th%&dz$-fw8n&r=uhdb!2ysm8^-es^'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 
@@ -45,17 +40,29 @@ INSTALLED_APPS = [
     # Thirth apps
     'rest_framework',
     'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',   # ← Correcto
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.staticfiles.middleware.StaticFilesMiddleware',  # ← Correcto y al final
 ]
+
+
+# === CORS ===
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://0.0.0.0:5173",
+]
+
 
 ROOT_URLCONF = 'django_rest_main.urls'
 
@@ -83,7 +90,8 @@ WSGI_APPLICATION = 'django_rest_main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/data/db.sqlite3'
     }
 }
 
