@@ -1,24 +1,22 @@
-# Dockerfile.backend ← colócalo en la raíz del proyecto
-FROM python:3.12-slim
+# Use the official Python runtime image
+FROM python:3.14
+ 
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /code
+WORKDIR /app
 
-# Instala dependencias de sistema mínimas
-RUN apt-get update && apt-get install -y --no-install-recommends gcc && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    gcc \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instala Python deps
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copia todo el proyecto
-COPY . .
-
-# Crea la carpeta data dentro del contenedor (por si acaso)
-RUN mkdir -p /data
+COPY . /app/
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,21 +1,53 @@
-# docker-compose.yml
-version: "3.9"
+version: '3.8'
 
 services:
+  # Backend Django con SQLite
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: Dockerfile
+    container_name: django_backend
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/code
-      - ./data:/data  # ← Monta la carpeta data con el .sqlite3
-    working_dir: /code
+      - .:/app
+      - /app/__pycache__
+      # Persistir la base de datos SQLite
+      - sqlite_data:/app/data
     ports:
       - "8000:8000"
     environment:
       - DEBUG=1
-      - DJANGO_SECRET_KEY=supersecretkeyfornow
-      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - SECRET_KEY=django-insecure-your-secret-key-here
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,backend
+    networks:
+      - app-network
+
+  # Frontend React + Vite
+  frontend:
+    build:
+      context: ./frontend-react
+      dockerfile: Dockerfile
+    container_name: react_frontend
+    volumes:
+      - ./frontend-react:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+
+volumes:
+  sqlite_data:  # Volumen para persistir la base de datos SQLite
+
+networks:
+  app-network:
+    driver: bridge
