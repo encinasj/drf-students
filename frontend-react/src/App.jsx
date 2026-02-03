@@ -9,6 +9,9 @@ import LearnUseMemo from "./components/LearnUseMemo"
 import ChaildA from "./components/ChaildA"
 import { createContext ,useState } from "react"
 import LearnCustomHooks from "./components/LearnCustomHooks"
+import LearnConditionalRendering from "./components/LearnConditionalRendering"
+import LearnMap from "./components/LearnMap"
+
 //Context API
 //Create, provider and consumer 
 const StockContext = createContext()
@@ -42,8 +45,10 @@ function App() {
             <ChaildA />
           </UserContext.Provider>
         </StockContext.Provider>
-      */}
-    <LearnCustomHooks/>
+      <LearnCustomHooks/>
+    <LearnConditionalRendering/>
+    */}
+    <LearnMap/>
     </>
   )
 }
