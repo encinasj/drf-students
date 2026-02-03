@@ -11,6 +11,8 @@ import { createContext ,useState } from "react"
 import LearnCustomHooks from "./components/LearnCustomHooks"
 import LearnConditionalRendering from "./components/LearnConditionalRendering"
 import LearnMap from "./components/LearnMap"
+import LearnCss from "./components/LearnCss"
+import LearnLoadImages from "./components/LearnLoadImages"
 
 //Context API
 //Create, provider and consumer 
@@ -47,8 +49,10 @@ function App() {
         </StockContext.Provider>
       <LearnCustomHooks/>
     <LearnConditionalRendering/>
-    */}
     <LearnMap/>
+    <LearnCss/>
+    */}
+    <LearnLoadImages/>
     </>
   )
 }
