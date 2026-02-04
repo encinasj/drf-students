@@ -13,6 +13,7 @@ import LearnConditionalRendering from "./components/LearnConditionalRendering"
 import LearnMap from "./components/LearnMap"
 import LearnCss from "./components/LearnCss"
 import LearnLoadImages from "./components/LearnLoadImages"
+import LearnForms from "./components/LearnForms"
 
 //Context API
 //Create, provider and consumer 
@@ -51,8 +52,9 @@ function App() {
     <LearnConditionalRendering/>
     <LearnMap/>
     <LearnCss/>
-    */}
     <LearnLoadImages/>
+    */}
+    <LearnForms/>
     </>
   )
 }
